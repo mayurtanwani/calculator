@@ -6,6 +6,7 @@ var clear = document.querySelector(".clear");
 var operators = document.querySelectorAll(".operator");
 var decimal = document.querySelector(".decimal");
 var show = "";
+var decimalvalue="";
 
 var equals = document.querySelector(".answer")
 var operand1=0;
@@ -16,6 +17,7 @@ var b;
 var c = 0;
 var a1=0;
 var a2=0;
+var count =0;
 input.value=0;
 input1.value =0;
 
@@ -34,10 +36,11 @@ for( var i=0; i<allbuttons.length; i++){
                 a=operand1;
 
             } else if(d==1){
-                operand1 = (operand1*10 + Number(this.value))/10;
-                input.value = operand1;
+                decimalvalue = decimalvalue + this.value;
+                operand1 = operand1;
+                input.value = operand1 + "." +decimalvalue;
                 console.log(operand1);
-                a=operand1;
+                a=Number(input.value);
 
             }
         
@@ -51,12 +54,15 @@ for( var i=0; i<allbuttons.length; i++){
             input.value = Number(operate( a,b,operator));
             
             }  else if(d==1){
-            operand2 = (operand2*10 + Number(this.value))/10;
-            input.value = operand2;
-            b = Number(operand2);
+
+            
+            decimalvalue = decimalvalue + this.value;
+            operand2 = operand2;
+            input.value = operand2  + "." +decimalvalue;
+            b = Number(input.value);
             console.log(a);
             console.log(b);
-            input.value = Number(operate( a,b,operator));
+            input.value = Number(operate( a,b,operator)).toFixed(2);
 
         
         }
@@ -71,6 +77,8 @@ for(var i=0; i< operators.length; i++){
 
     operators[i].addEventListener("click", function(){
 
+        decimalvalue="";
+        input.classList.remove("bold");
 
         show = show + this.value;
         input1.value = show;
@@ -99,11 +107,13 @@ decimal.addEventListener("click", function(){
     d=1;
     show = show + this.value;
         input1.value = show;
+
 })
 
 equals.addEventListener("click", function(){
     
     input.classList.add("bold");
+    decimalvalue="";
 
 })
     
@@ -166,6 +176,9 @@ function reset(){
     d=0;
     input1.value = 0;
     show = "";
+    decimalvalue="";
+    input.classList.remove("bold");
+
 
 
 }
